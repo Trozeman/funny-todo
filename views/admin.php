@@ -8,12 +8,34 @@
     <title>Document</title>
     <script>
 
-        const toggleClass = (e) => {
+            const toggleClass = (e) => {
             document.querySelector(`[data-id='${e}']`).classList.toggle('done');
         };
         document.addEventListener("DOMContentLoaded", () => {
+            if(sessionStorage.getItem('login') === "ok"){
+                if(document.querySelector('.body').classList.contains('hidden')) document.querySelector('.body').classList.remove('hidden');
+                if(!document.querySelector('.login').classList.contains('hidden')) document.querySelector('.login').classList.add('hidden')
+            }else {
+                if(!document.querySelector('.body').classList.contains('hidden')) document.querySelector('.body').classList.add('hidden');
+                if(document.querySelector('.login').classList.contains('hidden')) document.querySelector('.login').classList.remove('hidden')
+            }
 
-            let data = <?=json_encode($data);?>;
+
+            document.querySelector('#login').onclick = () => {
+                let n = document.querySelector('#name').value;
+                let p = document.querySelector('#pass').value;
+                if(n === 'admin'&& p === '123') {
+                    sessionStorage.setItem('login', 'ok');
+                    location.reload();
+                }
+                else if(n !== 'admin') {
+                    alert('Err: User name');
+                }
+                else if( p !== '123') {
+                    alert('Err: Password');
+                }
+
+            };
 
             let todos = [...document.querySelectorAll('.todo')];
             let part = Math.ceil(todos.length / 3);
@@ -62,10 +84,19 @@
         <li><a href="/index/sort?by=name">Sort by name</a></li>
         <li><a href="/index/sort?by=id">Sort by id</a></li>
         <li><a href="/index/sort?by=email">Sort by email</a></li>
-        <li><a href="/admin">Admin</a></li>
     </ul>
 
 </header>
+
+<div class="login">
+    <h1>Admin page</h1>
+    <div class="form">
+        <input id="name" type="text" placeholder="username">
+        <input id="pass" type="password" placeholder="password">
+        <button id="login">Login</button>
+    </div>
+</div>
+
 <div class="body">
     <?php foreach ($data as $todo): ?>
         <div class="todo <?= $todo->done ? "done" : ""; ?>" data-id="<?= $todo->id; ?>">
@@ -81,8 +112,8 @@
                 Save by ID : <?= $todo->id; ?>
             </button>
         </div>
-
     <?php endforeach; ?>
+
 </div>
 <div class="new-todo">
     <label for="Username">Username</label>
@@ -105,7 +136,7 @@
         min-height: 100vh;
     }
 
-    .body, .new-todo {
+    .body, .new-todo, .login{
         display: flex;
         align-items: center;
         justify-content: center;
