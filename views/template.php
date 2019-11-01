@@ -15,7 +15,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             let todos = [...document.querySelectorAll('.todo')];
-            let part = Math.round(todos.length / 3);
+            let part = Math.ceil(todos.length / 3);
             const pages = [];
             for (let i = 0; i < part; i++) {
                 pages.push(todos.slice(i * 3, (i * 3) + 3));
@@ -82,6 +82,15 @@
 
     <?php endforeach; ?>
 </div>
+<div class="new-todo">
+    <label for="Username">Username</label>
+    <input type="text" placeholder="Name">
+    <label for="Username">Email</label>
+    <input type="email" placeholder="E-mail">
+    <label for="Username">TODO Text</label>
+    <textarea></textarea>
+    <button class="add-todo">Add TODO</button>
+</div>
 </body>
 </html>
 
@@ -93,13 +102,32 @@
         font-family: monospace;
     }
 
-    .body {
+    .body, .new-todo {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         padding: 15px 0;
         background: #f2f2f2;
+    }
+
+    .new-todo{
+        background: #008abf;
+        color: #fcfcfc;
+    }
+
+    .new-todo>input, .new-todo>textarea{
+        margin: 10px;
+        resize: none;
+    }
+
+    .new-todo>button{
+        padding: 5px;
+        background: #00bc20;
+        color: #fcfcfc;
+        border-radius: 4px;
+        border: solid 1px #00a71f;
+        cursor: pointer;
     }
 
     .todo {
