@@ -14,6 +14,25 @@
         };
 
         document.addEventListener("DOMContentLoaded", () => {
+            let todos = [...document.querySelectorAll('.todo')];
+            let part = Math.round(todos.length / 3);
+            const pages = [];
+            for (let i = 0; i < part; i++) {
+                pages.push(todos.slice(i * 3, (i * 3) + 3));
+            }
+
+            const showByIndex = (show) => {
+                pages.forEach((page, index) => {
+                    (index === show) ?
+                        page.forEach((e) => {
+                            if (e.classList.contains("hidden")) e.classList.remove('hidden');
+                        }):
+                        page.forEach((e) => {
+                            e.classList.add('hidden');
+                        })
+                });
+            };
+            showByIndex(1);
 
         });
     </script>
@@ -99,20 +118,24 @@
         font-weight: bold;
         cursor: pointer;
     }
-    header{
+
+    header {
         position: sticky;
         top: 0;
         background: #555555;
         color: #fcfcfc;
         padding: 15px 10px;
     }
-    ul{
+
+    ul {
         list-style: none;
     }
-    li{
+
+    li {
         display: inline-block;
     }
-    li>a{
+
+    li > a {
         color: #fcfcfc;
         text-decoration: none;
         font-size: 1rem;
@@ -120,5 +143,10 @@
         padding: 10px 15px;
         border-radius: 3px;
         border: solid 1px #78a093;
+    }
+
+    .hidden {
+        background: red;
+        display: none;
     }
 </style>
