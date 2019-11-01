@@ -26,14 +26,31 @@
                     (index === show) ?
                         page.forEach((e) => {
                             if (e.classList.contains("hidden")) e.classList.remove('hidden');
-                        }):
+                        }) :
                         page.forEach((e) => {
                             e.classList.add('hidden');
                         })
                 });
             };
+
             showByIndex(1);
 
+            let list = document.createElement('ul');
+            list.classList.add('pagination');
+            pages.forEach((e, i) => {
+                let item = document.createElement("li");
+                item.innerText = `Page: ${i + 1}`;
+                item.onclick = (e) => {
+                    showByIndex(i);
+                    document.querySelectorAll('li.active').forEach((e) => {
+                        e.classList.remove('active');
+                    });
+                    e.target.classList.add('active')
+                };
+                list.appendChild(item);
+            });
+
+            document.querySelector(".body").appendChild(list);
         });
     </script>
 </head>
@@ -127,12 +144,26 @@
         padding: 15px 10px;
     }
 
-    ul {
+    ul, {
         list-style: none;
     }
 
     li {
         display: inline-block;
+    }
+
+    .pagination > li {
+        padding: 5px;
+        background: #00bc20;
+        color: #fcfcfc;
+        border-radius: 4px;
+        border: solid 1px #00a71f;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .pagination > li.active {
+        background: #75a4bc;
     }
 
     li > a {
